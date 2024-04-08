@@ -1,0 +1,289 @@
+/*@charset "UTF-8";*/
+@import "https://s3-us-west-2.amazonaws.com/s.cdpn.io/584938/dashboard.scss";
+/*@import url(https://fonts.googleapis.com/css?family=Cabin:400);*/
+
+.App {
+  text-align: center;
+  background-color: #1b2431;
+  color: #202020;
+  font-family: "Times New Roman", sans-serif;
+  font-size: 13px;
+}
+
+/*.App-logo {*/
+/*  height: 40vmin;*/
+/*  pointer-events: none;*/
+/*}*/
+
+/*@media (prefers-reduced-motion: no-preference) {*/
+/*  .App-logo {*/
+/*    animation: App-logo-spin infinite 20s linear;*/
+/*  }*/
+/*}*/
+
+/*.App-header {*/
+/*  background-color: #282c34;*/
+/*  min-height: 100vh;*/
+/*  display: flex;*/
+/*  flex-direction: column;*/
+/*  align-items: center;*/
+/*  justify-content: center;*/
+/*  font-size: calc(10px + 2vmin);*/
+/*  color: white;*/
+/*}*/
+
+/*.App-link {*/
+/*  color: #61dafb;*/
+/*}*/
+
+
+body {
+  background-color: #1b2431;
+  color: red;
+  font-family: "Times New Roman", sans-serif;
+  font-size: 130px;
+}
+
+.container-fluid {
+  background-color: #1b2431;
+}
+a:hover {
+  text-decoration: none;
+}
+p, figure {
+  margin: 0;
+  padding: 0;
+  color: #efe;
+}
+
+
+.navbar {
+  background-color: #0d1117;
+  color: white;
+}
+.navbar-text {
+  margin-right: 20px;
+  color: #738297;
+}
+
+.sidebar {
+  background-color: #141a24;
+  box-shadow: none;
+}
+.sidebar .title{
+  font-Size: 22px;
+  color: white;
+  background-color:#141a24;
+  margin-top: 40px; /* 增加標題的上外邊距 */
+  margin-bottom: 20px; /* 增加標題的下外邊距 */
+}
+.sidebar .nav-link {
+  border-left: 5px solid transparent;
+  color: #738297;
+  padding: .5rem .75rem;
+  background-color:#141a24;
+}
+.sidebar .nav-link:hover {
+  color: white;
+}
+.sidebar .nav-link.active {
+  border-left: 5px solid #738297;
+  color: white;
+}
+.sidebar .zmdi {
+  display: inline-block;
+  font-size: 1.35rem;
+  margin-right: 5px;
+  min-width: 25px;
+  background-color:#141a24;
+}
+
+
+
+.nav.flex-column {
+  margin-top: 40px; /* 增加 flex-column 元件頂部的外邊距 */
+}
+
+.projects {
+  background-color: #273142;
+  border: 1px solid #313D4F;
+  overflow-x: auto;
+  width: 100%;
+}
+.projects-inner {
+  border-radius: 4px;
+}
+.projects-header {
+  color: white;
+  padding: 22px;
+}
+.projects-header .title {
+  display: inline-block;
+  font-size: 21px;
+}
+.projects-table {
+  background: #273142;
+  width: 100%;
+}
+.projects-table td, .projects-table th {
+  color: white;
+  padding: 10px 22px;
+  vertical-align: middle;
+}
+.projects-table td p {
+  font-size: 12px;
+}
+.projects-table th {
+  background-color: #313D4F;
+}
+.projects-table tr:hover {
+  background-color: #303d52;
+}
+.projects-table tr:not(:last-of-type) {
+  border-bottom: 1px solid #313D4F;
+}
+.projects-table .status > form {
+  float: right;
+}
+.projects-table .status-text {
+  display: inline-block;
+  font-size: 12px;
+  margin: 11px 0;
+  padding-left: 20px;
+  position: relative;
+}
+.projects-table .status-text:before {
+  border: 3px solid;
+  border-radius: 50%;
+  content: "";
+  height: 14px;
+  left: 0;
+  position: absolute;
+  top: 1px;
+  width: 14px;
+}
+.projects-table .status-text.status-green:before {
+  border-color: #66B92E;
+}
+.projects-table .status-text.status-red:before {
+  border-color: #D65B4A;
+}
+.selectric {
+  background-color: transparent;
+  border-color: #313D4F;
+  border-radius: 4px;
+}
+.selectric .label {
+  color: #738297;
+  line-height: 34px;
+  margin-right: 10px;
+  text-align: left;
+}
+.selectric-wrapper {
+  float: right;
+  width: 150px;
+}
+.zmdi {
+  line-height: 1;
+  vertical-align: middle;
+
+}
+
+
+
+
+.col-lg-12
+{
+  /*margin-top: 100px;*/
+  margin-left: 20%;
+}
+
+.upload
+{
+  color : white;
+
+}
+
+.ttable
+{
+  border-collapse: collapse;
+}
+.ttable th, .ttable td {
+  border: 1px solid #dddddd;
+  padding: 8px;
+}
+
+button
+{
+  background-color: white;
+}
+
+*
+{
+  background-color: #1b2431;
+}
+
+select{
+  color: white;
+}
+
+.bar
+{
+  width: 800px;
+  height: 600px;
+}
+
+.chart_container
+{
+  display: flex;
+}
+
+.pie
+{
+  width: 400px;
+  height: 400px;
+}
+
+
+/*About*/
+.about-container {
+  max-width: 800px;
+  margin: auto;
+  padding: 20px;
+}
+
+.about-title {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.about-description {
+  font-size: 1.2rem;
+  line-height: 1.5;
+}
+
+.about-features {
+  margin-top: 40px;
+}
+
+.feature-title {
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+}
+
+.feature-list {
+  list-style-type: disc;
+  margin-left: 20px;
+}
+
+.about-join {
+  margin-top: 40px;
+  font-size: 1.2rem;
+  text-align: center;
+}
+
+a:link,
+a:visited {
+  color: inherit; /* 继承父元素的文本颜色 */
+}
