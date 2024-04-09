@@ -12,3 +12,5 @@ Say goodbye to tedious manual tracking! Our full-stack website simplifies expens
 
 
 **Note:** This project is still in development and is expected to be completed by April 2024.
+
+![demo](demo/dashboard.png)
