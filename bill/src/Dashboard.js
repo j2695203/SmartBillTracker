@@ -1,9 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import Chart from 'chart.js/auto';
-import * as d3 from 'd3';
-
-
-
 
 function Dashboard() {
     const [transactions, setTransactions] = useState([]);
@@ -53,8 +49,6 @@ function Dashboard() {
 
             const ctx = document.getElementById('myDoughnutChart');
 
-
-
             const newChartInstance = new Chart(ctx, {
                 type: 'doughnut',
                 data: {
@@ -63,12 +57,12 @@ function Dashboard() {
                         label: 'Transaction Amount',
                         data: Object.values(categories),
                         backgroundColor: [
-                            'rgba(255, 99, 132, 0.5)',
-                            'rgba(54, 162, 235, 0.5)',
-                            'rgba(255, 206, 86, 0.5)',
-                            'rgba(75, 192, 192, 0.5)',
-                            'rgba(153, 102, 255, 0.5)',
-                            'rgba(255, 159, 64, 0.5)'
+                            'rgba(255, 99, 132, 0.6)',
+                            'rgba(54, 162, 235, 0.6)',
+                            'rgba(255, 206, 86, 0.6)',
+                            'rgba(75, 192, 192, 0.6)',
+                            'rgba(153, 102, 255, 0.6)',
+                            'rgba(255, 159, 64, 0.6)'
                         ],
                         borderWidth: 1
                     }]
@@ -76,12 +70,16 @@ function Dashboard() {
                 options: {
                     layout: {
                         padding: 0 // 设置内边距为 0
+                    },
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: 'rgba(255, 255, 255, 0.8)', // 设置图例标签的颜色，可以调整透明度
+                            }
+                        }
                     }
                 }
             });
-            // Set canvas size before creating chart instance
-            // ctx.width = 400;
-            // ctx.height = 400;
             setChartInstance(newChartInstance);
         }
     }, [transactions]);
@@ -109,12 +107,12 @@ function Dashboard() {
 
             const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
             const backgroundColors = [
-                'rgba(255, 99, 132, 0.5)',
-                'rgba(54, 162, 235, 0.5)',
-                'rgba(255, 206, 86, 0.5)',
-                'rgba(75, 192, 192, 0.5)',
-                'rgba(153, 102, 255, 0.5)',
-                'rgba(255, 159, 64, 0.5)'
+                'rgba(255, 99, 132, 0.6)',
+                'rgba(54, 162, 235, 0.6)',
+                'rgba(255, 206, 86, 0.6)',
+                'rgba(75, 192, 192, 0.6)',
+                'rgba(153, 102, 255, 0.6)',
+                'rgba(255, 159, 64, 0.6)'
             ]
             const datasets = Object.keys(transactions.reduce((acc, cur) => {
                 acc[cur.Category] = true;
@@ -138,18 +136,28 @@ function Dashboard() {
                 options: {
                     scales: {
                         y: {
-                            // beginAtZero: true ,// y 轴从 0 开始
-                            stacked : true
+                            stacked : true,
+                            ticks: {
+                                color: 'rgba(255, 255, 255, 0.8)' // 设置 y 轴上数字的颜色
+                            }
                         },
                         x: {
-                            stacked: true // x 轴堆叠
+                            stacked: true, // x 轴堆叠
+                            ticks: {
+                                color: 'rgba(255, 255, 255, 0.8)'
+                            }
                         },
                         yAxes: [{
                             stacked: true // y 轴堆叠
                         }]
                     },
-                    // borderWidth: 1
-
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: 'rgba(255, 255, 255, 0.8)', // 设置图例标签的颜色
+                            }
+                        }
+                    }
                 }
             });
             setMonthlyChartInstance(newChartInstance);
@@ -158,31 +166,27 @@ function Dashboard() {
 
     return (
         <div>
-            <h1>Dashboard</h1>
-            <div className="chart_container">
-                <div className="pie">
-                    <span>Yearly Expense Breakdown</span>
-                    <canvas id="myDoughnutChart" style={{ maxWidth: "350px" }}></canvas>
+            <h1>Expense Dashboard</h1>
 
-                </div>
-                <div className="bar">
-                    <div className="year_widget">
-                        <button onClick={handlePrevYear}>{'<'}</button>
-                        <span>{currentYear}</span>
-                        <button onClick={handleNextYear}>{'>'}</button>
-                    </div>
-                    {/*<span className="monthly_title">Monthly</span>*/}
-                    <canvas id="monthlyChart" style={{maxWidth: "600px"}}></canvas>
-
-                </div>
-                <div className="bar">
-                    {/*<span>Monthly Expense</span>*/}
-                    <canvas id="monthlyChart" style={{ maxWidth: "600px" }}></canvas>
-                </div>
-
+            <div className="year_widget">
+                <span>Year Selection :</span>
+                <button onClick={handlePrevYear} className="btn btn-outline-secondary">{'<'}</button>
+                <span>{currentYear}</span>
+                <button onClick={handleNextYear} className="btn btn-outline-secondary">{'>'}</button>
             </div>
 
+            <div className="chart_container">
+                <div className="pie">
+                    <canvas id="myDoughnutChart"></canvas>
+                    {transactions.length > 0 && <h5>Yearly Expense Breakdown</h5>}
+                </div>
 
+                <div className="bar">
+                    <canvas id="monthlyChart"></canvas>
+                    {transactions.length > 0 && <h5>Monthly Expense Breakdown</h5>}
+
+                </div>
+            </div>
         </div>
     );
 }

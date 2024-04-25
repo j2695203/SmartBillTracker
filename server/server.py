@@ -10,6 +10,7 @@ from datetime import datetime
 app = Flask(__name__)
 CORS(app) 
 
+# Establish connection to MySQL database
 conn = mysql.connector.connect(
     host="localhost",
     user="credit",
@@ -17,13 +18,12 @@ conn = mysql.connector.connect(
     database="CreditTransactions"
 )
 
-
-
-
+# Define function to add CORS headers to responses
 def add_cors_headers(response):
     response.headers['Access-Control-Allow-Origin'] = 'http://localhost:8080'
     return response
 
+# Define function to extract text from PDF file
 def extract_text_from_pdf(file):
     doc = fitz.open(stream=file.read())
     text = ''
@@ -33,19 +33,19 @@ def extract_text_from_pdf(file):
     doc.close()
     return text
 
+# Define function to parse PDF file and extract transaction data
 def parse_file(file):
     pdf_text = extract_text_from_pdf(file)
+
     # Declare pattern
     pattern = re.compile(r"New Charges.*?four digits of card number", re.DOTALL)
-
     match = pattern.search(pdf_text)
-
     extracted_content = match.group(0)
 
     # Declare pattern
     pattern2 = re.compile(r"(\d{4})\n(\d+)\n(\d{2}/\d{2}/\d{2})\n(\d{2}/\d{2}/\d{2})\n(.*?)\n(.*?)\n\$(\d+\.\d{2})", re.DOTALL)
-
     matches2 = pattern2.findall(extracted_content)
+
     # Convert to JSON
     transactions = []
     for match in matches2:
@@ -64,14 +64,15 @@ def parse_file(file):
     # print(json_data)
     return json_data
 
+# Define route for getting transactions
 @app.route('/transactions', methods = ['GET'])
 def get_transactions():
     try:
         year = request.args.get('year')
         cursor = conn.cursor(dictionary=True)
-        if year:  # 如果提供了年份参数，则根据年份筛选数据
+        if year:
             cursor.execute('SELECT * FROM transactions WHERE YEAR(TransactionDate) = %s', (year,))
-        else:  # 否则返回所有数据
+        else:
             cursor.execute('SELECT * FROM transactions')
         transactions = cursor.fetchall()
         return jsonify(transactions)
@@ -80,6 +81,7 @@ def get_transactions():
     finally:
         cursor.close()
 
+# Define route for uploading files
 @app.route('/upload', methods=['POST'])
 def upload_file():
     if 'file' not in request.files:
@@ -89,17 +91,11 @@ def upload_file():
     if file.filename == '':
         return 'no file selected', 400
 
-
-
     data = parse_file(file)
     print(data)
-
-    # # save the file to local folder
-    # file.save('uploads/' + file.filename)
-
-    
     return jsonify(data)
 
+# Define route for submitting data to database
 @app.route('/submit', methods=['POST'])
 def updateDatabase():
     if request.method == 'POST':
@@ -107,7 +103,6 @@ def updateDatabase():
         print(data)
 
         cursor = conn.cursor()
-
         # sql = "INSERT INTO Transactions (TransactionID, TransactionDate, CardNumber, Merchant, Amount, Category) VALUES (%s, %s, %s, %s, %s, %s)"
         # val = (data['Transaction ID'], data['Transaction Date'], data['Card Number'], data['Merchant'], data['Amount'], data['Category'])
  
@@ -116,18 +111,12 @@ def updateDatabase():
             sql = "INSERT INTO Transactions (TransactionID, TransactionDate, CardNumber, Merchant, Amount, Category) VALUES (%s, %s, %s, %s, %s, %s)"
             val = (record['Transaction ID'], transaction_date, record['Card Number'], record['Merchant'], record['Amount'], record['category'])       
             cursor.execute(sql, val)
-        #  # 执行 SQL 语句
-        # cursor.execute(sql, val)
 
-        # # 提交更改
         conn.commit()
-
-        # # 关闭游标
         cursor.close()
-
         return 'Data inserted successfully!'
        
-
+# Define route for getting transactions by date range
 @app.route('/transactions/range', methods=['GET'])
 def get_transactions_by_range():
     try:
@@ -135,7 +124,6 @@ def get_transactions_by_range():
         end_date = request.args.get('end_date')
         print('Start Date:', start_date)
         print('End Date:', end_date)
-
 
         cursor = conn.cursor()
 
@@ -145,7 +133,6 @@ def get_transactions_by_range():
             WHERE TransactionDate BETWEEN %s AND %s
         ''', (start_date, end_date))
 
-
         transactions = cursor.fetchall()
         print(transactions)
         return jsonify(transactions)
@@ -154,8 +141,6 @@ def get_transactions_by_range():
         return jsonify({'error': str(e)}), 500
     finally:
         cursor.close()
-
-
 
 
 if __name__ == '__main__':

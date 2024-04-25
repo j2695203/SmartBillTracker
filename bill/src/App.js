@@ -1,7 +1,5 @@
-import logo from './logo.svg';
 import './App.css';
 import './material-design-iconic-font.min.css';
-
 
 import {HashRouter as Router, Link, NavLink, Route, Routes, useNavigate} from 'react-router-dom';
 import React, {useState, useContext, useEffect} from 'react';
@@ -13,6 +11,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
+
 
 function Statements(){
   const [startDate, setStartDate] = useState(null);
@@ -37,22 +36,22 @@ function Statements(){
 
 
   return (
-      <div className="about-container">
-        <h1 className="about-title">Statements</h1>
+      <div>
+        <h1>Historical Statements</h1>
         <div className="date-picker-container">
+          <span>Time Period Selection : </span>
           <DatePicker
-
               selected={startDate}
               onChange={date => setStartDate(date)}
               dateFormat="yyyy-MM-dd"
               selectsStart
               startDate={startDate}
               endDate={endDate}
-              placeholderText="Start Date"
-
+              placeholderText=" Start Date"
           />
+
           <div className="spacer" style={{padding: '0 10px'}}/>
-          {/* 使用 padding 创建间隔 */}
+
           <DatePicker
               selected={endDate}
               onChange={date => setEndDate(date)}
@@ -61,14 +60,14 @@ function Statements(){
               startDate={startDate}
               endDate={endDate}
               minDate={startDate}
-              placeholderText="End Date"
-
+              placeholderText=" End Date"
           />
           <div className="spacer" style={{padding: '0 10px'}}/>
-          {/* 使用 padding 创建间隔 */}
 
-          <button onClick={handleConfirm}>Confirm</button>
+
+          <button class="btn btn-outline-primary" onClick={handleConfirm}>Confirm</button>
         </div>
+
           <div className="transactions">
             <h2>Transactions</h2>
             <table className="ttable">
@@ -93,8 +92,6 @@ function Statements(){
       </div>
   )
 }
-
-
 
 function About(){
   return (
@@ -126,15 +123,12 @@ function About(){
   )
 }
 
-
 function Upload() {
 
   const [selectedFile, setSelectedFile] = useState(null);
   const [isFileUploaded, setIsFileUploaded] = useState(false);
   const [transactions, setTransactions] = useState([]);
   const [newTransactions, setNewTransactions] = useState([]);
-
-
 
   useEffect(() => {
     if (newTransactions.length > 0) {
@@ -241,51 +235,58 @@ function Upload() {
   return (
       <div>
         <h1>Upload New Statement</h1>
-        <input type="file" onChange={handleFileChange}/>
-        <button className="btn btn-outline-primary" onClick={handleUpload}>Upload new statement</button>
 
-        { isFileUploaded && transactions.length === 0 ?(
+        <div className="input-group">
+          <input type="file" className="form-control" onChange={handleFileChange}/>
+          <button className="btn btn-outline-secondary" type="button" onClick={handleUpload}>Upload</button>
+        </div>
+
+        {isFileUploaded && transactions.length === 0 ? (
             <div>
               <h2>Transaction List:</h2>
               <h6>No transactions on this statement</h6>
             </div>
         ) : (
-            <div style={{display: isFileUploaded ? 'block' : 'none' }}>
-                <h2>Transaction List:</h2>
-                <table className="ttable">
-                  <thead>
-                  <tr>
-                    <th>Transaction Date</th>
-                    <th>Merchant</th>
-                    <th>Amount</th>
-                    <th>Category</th>
-                  </tr>
-                  </thead>
-                  <tbody>
-                  {transactions.map((transaction, index) => (
-                      <tr key={index}>
-                        <td>{transaction["Transaction Date"]}</td>
-                        <td>{transaction["Merchant"]}</td>
-                        <td>{transaction["Amount"]}</td>
-                        <td>
-                          <select name="category">
-                            <option value="" disabled>Please select a category</option>
-                            <option value="Transportation">Transportation</option>
-                            <option value="Dining">Dining</option>
-                            <option value="Grocery">Grocery</option>
-                            <option value="Housing">Housing</option>
-                            <option value="Entertainment">Entertainment</option>
-                            <option value="Education">Education</option>
-                            <option value="Other">Other</option>
-                          </select>
-                        </td>
-                      </tr>
-                  ))}
-                  </tbody>
-                </table>
-                <button className="btn btn-primary" onClick={handleSubmit}>Submit</button>
-              </div>
-          )
+            <div style={{display: isFileUploaded ? 'block' : 'none'}}>
+              <h2>Transaction List:</h2>
+              <table className="ttable mb-3">
+                <thead>
+                <tr>
+                  <th>Transaction Date</th>
+                  <th>Merchant</th>
+                  <th>Amount</th>
+                  <th>Category</th>
+                </tr>
+                </thead>
+                <tbody>
+                {transactions.map((transaction, index) => (
+                    <tr key={index}>
+                      <td>{transaction["Transaction Date"]}</td>
+                      <td>{transaction["Merchant"]}</td>
+                      <td style={{ textAlign: 'center'}}>{transaction["Amount"]}</td>
+                      <td>
+                        <select name="category">
+                          <option selected="" disabled>Please select a category</option>
+                          <option value="Transportation">Transportation</option>
+                          <option value="Dining">Dining</option>
+                          <option value="Grocery">Grocery</option>
+                          <option value="Housing">Housing</option>
+                          <option value="Entertainment">Entertainment</option>
+                          <option value="Shopping">Shopping</option>
+                          <option value="Travel">Travel</option>
+                          <option value="Education">Education</option>
+                          <option value="Health">Health</option>
+                          <option value="Bill">Bill</option>
+                          <option value="Other">Other</option>
+                        </select>
+                      </td>
+                    </tr>
+                ))}
+                </tbody>
+              </table>
+              <button className="btn btn-primary" onClick={handleSubmit}>Submit</button>
+            </div>
+        )
         }
 
       </div>
@@ -294,16 +295,17 @@ function Upload() {
 }
 
 function App() {
-
   return (
       <Router>
         <div>
           <div className="container-fluid">
             <div className="row">
               <nav className="col-md-2 d-none d-md-block sidebar">
-                <h1 className="title">
-                  Smart Bill Tracker
-                </h1>
+              <NavLink to="/">
+                  <h1 className="title">
+                    Smart Bill Tracker
+                  </h1>
+                </NavLink>
                 <div>
                   <ul className="nav flex-column">
                     <li className="nav-item">
@@ -330,30 +332,24 @@ function App() {
                         About
                       </NavLink>
                     </li>
-
-
                   </ul>
                 </div>
               </nav>
 
 
               <main role="main" className="col-md-9 ml-sm-auto col-lg-12 my-5">
-                <div className={"upload"}>
-
+                <div className={"content"}>
                   <Routes>
+                    <Route path="/" element={<About/>}/>
                     <Route path="/upload" element={<Upload/>}/>
                     <Route path="/dashboard" element={<Dashboard/>}/>
                     <Route path="/about" element={<About/>}/>
                     <Route path="/statements" element={<Statements/>}/>
                   </Routes>
-
                 </div>
               </main>
           </div>
         </div>
-
-
-        {/*</MyProvider>*/}
       </div>
       </Router>
   );
