@@ -9,24 +9,31 @@ function Dashboard() {
     const [transactions, setTransactions] = useState([]);
     const [chartInstance, setChartInstance] = useState(null); // 用于存储 Chart.js 实例
     const [monthlyChartInstance, setMonthlyChartInstance] = useState(null);
+    const [currentYear, setCurrentYear] = useState(new Date().getFullYear()); // 添加当前年份状态
 
     useEffect(() => {
-        fetch('http://localhost:8000/transactions')
+        fetch(`http://localhost:8000/transactions?year=${currentYear}`) // 根据当前年份获取数据
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
-                return response.json(); // 解析 JSON 数据
+                return response.json();
             })
             .then(data => {
-                setTransactions(data); // 将获取的数据设置到状态中
+                setTransactions(data);
             })
             .catch(error => {
                 console.error('There was a problem with your fetch operation:', error);
             });
-    }, []); // 通过传递空数组作为依赖项，确保该 useEffect 仅在初始渲染时执行一次
-
+    }, [currentYear]);
     console.log(transactions);
+    const handlePrevYear = () => {
+        setCurrentYear(prevYear => prevYear - 1); // 更新当前年份为上一年
+    };
+
+    const handleNextYear = () => {
+        setCurrentYear(prevYear => prevYear + 1); // 更新当前年份为下一年
+    };
 
 
     useEffect(() => {
@@ -156,9 +163,20 @@ function Dashboard() {
                 <div className="pie">
                     <span>Yearly Expense Breakdown</span>
                     <canvas id="myDoughnutChart" style={{ maxWidth: "350px" }}></canvas>
+
                 </div>
                 <div className="bar">
-                    <span>Monthly Expense</span>
+                    <div className="year_widget">
+                        <button onClick={handlePrevYear}>{'<'}</button>
+                        <span>{currentYear}</span>
+                        <button onClick={handleNextYear}>{'>'}</button>
+                    </div>
+                    {/*<span className="monthly_title">Monthly</span>*/}
+                    <canvas id="monthlyChart" style={{maxWidth: "600px"}}></canvas>
+
+                </div>
+                <div className="bar">
+                    {/*<span>Monthly Expense</span>*/}
                     <canvas id="monthlyChart" style={{ maxWidth: "600px" }}></canvas>
                 </div>
 

@@ -1,6 +1,8 @@
 import logo from './logo.svg';
 import './App.css';
 import './material-design-iconic-font.min.css';
+
+
 import {HashRouter as Router, Link, NavLink, Route, Routes, useNavigate} from 'react-router-dom';
 import React, {useState, useContext, useEffect} from 'react';
 import Dashboard from "./Dashboard";
@@ -8,6 +10,90 @@ import Dashboard from "./Dashboard";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+
+function Statements(){
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
+  const [transactions, setTransactions] = useState([]);
+
+
+    // 在这里执行查询数据库的操作，使用 startDate 和 endDate 来构建查询时间区间
+  const handleConfirm = async () => {
+    try {
+      const formattedStartDate = startDate.toISOString().slice(0, 10); // 格式化起始日期
+      const formattedEndDate = endDate.toISOString().slice(0, 10); // 格式化结束日期
+
+      const response = await fetch(`http://localhost:8000/transactions/range?start_date=${formattedStartDate}&end_date=${formattedEndDate}`);
+      const data = await response.json();
+      setTransactions(data)
+      console.log(data)
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+
+
+  return (
+      <div className="about-container">
+        <h1 className="about-title">Statements</h1>
+        <div className="date-picker-container">
+          <DatePicker
+
+              selected={startDate}
+              onChange={date => setStartDate(date)}
+              dateFormat="yyyy-MM-dd"
+              selectsStart
+              startDate={startDate}
+              endDate={endDate}
+              placeholderText="Start Date"
+
+          />
+          <div className="spacer" style={{padding: '0 10px'}}/>
+          {/* 使用 padding 创建间隔 */}
+          <DatePicker
+              selected={endDate}
+              onChange={date => setEndDate(date)}
+              dateFormat="yyyy-MM-dd"
+              selectsEnd
+              startDate={startDate}
+              endDate={endDate}
+              minDate={startDate}
+              placeholderText="End Date"
+
+          />
+          <div className="spacer" style={{padding: '0 10px'}}/>
+          {/* 使用 padding 创建间隔 */}
+
+          <button onClick={handleConfirm}>Confirm</button>
+        </div>
+          <div className="transactions">
+            <h2>Transactions</h2>
+            <table className="ttable">
+              <thead>
+              <tr>
+                <th>Transaction Date</th>
+                <th>Merchant</th>
+                <th>Amount</th>
+              </tr>
+              </thead>
+              <tbody>
+              {transactions.map((transaction, index) => (
+                  <tr key={index}>
+                    <td>{transaction[0]}</td>
+                    <td>{transaction[1]}</td>
+                    <td>{transaction[2]}</td>
+                  </tr>
+              ))}
+              </tbody>
+            </table>
+          </div>
+      </div>
+  )
+}
+
 
 
 function About(){
@@ -40,6 +126,7 @@ function About(){
   )
 }
 
+
 function Upload() {
 
   const [selectedFile, setSelectedFile] = useState(null);
@@ -48,7 +135,7 @@ function Upload() {
   const [newTransactions, setNewTransactions] = useState([]);
 
 
-  // 當 newTransactions 狀態發生變化時，將調用 notifyServer 函式通知服務器
+
   useEffect(() => {
     if (newTransactions.length > 0) {
       notifyServer(newTransactions);
@@ -257,6 +344,7 @@ function App() {
                     <Route path="/upload" element={<Upload/>}/>
                     <Route path="/dashboard" element={<Dashboard/>}/>
                     <Route path="/about" element={<About/>}/>
+                    <Route path="/statements" element={<Statements/>}/>
                   </Routes>
 
                 </div>

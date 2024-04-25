@@ -1,11 +1,59 @@
+
+
+@charset "UTF-8";
+@import "https://s3-us-west-2.amazonaws.com/s.cdpn.io/584938/dashboard.scss";
+@import url(https://fonts.googleapis.com/css?family=Cabin:400);
+
+/*!*@charset "UTF-8";*!*/
+/*@import "https://s3-us-west-2.amazonaws.com/s.cdpn.io/584938/dashboard.scss";*/
+/*!*@import url(https://fonts.googleapis.com/css?family=Cabin:400);*!*/
+
+
 /*@charset "UTF-8";*/
 @import "https://s3-us-west-2.amazonaws.com/s.cdpn.io/584938/dashboard.scss";
 /*@import url(https://fonts.googleapis.com/css?family=Cabin:400);*/
+
 
 .App {
   text-align: center;
   background-color: #1b2431;
   color: #202020;
+
+/*  font-family: "Montserrat", "Helvetica", "Open Sans", "Arial";*/
+/*  font-size: 13px;*/
+/*}*/
+
+/*.App-logo {*/
+/*  height: 40vmin;*/
+/*  pointer-events: none;*/
+/*}*/
+
+/*@media (prefers-reduced-motion: no-preference) {*/
+/*  .App-logo {*/
+/*    animation: App-logo-spin infinite 20s linear;*/
+/*  }*/
+/*}*/
+
+/*.App-header {*/
+/*  background-color: #282c34;*/
+/*  min-height: 100vh;*/
+/*  display: flex;*/
+/*  flex-direction: column;*/
+/*  align-items: center;*/
+/*  justify-content: center;*/
+/*  font-size: calc(10px + 2vmin);*/
+/*  color: white;*/
+/*}*/
+
+/*.App-link {*/
+/*  color: #61dafb;*/
+/*}*/
+/*body {*/
+/*  background-color: #1b2431;*/
+/*  color: #202020;*/
+/*  font-family: "Montserrat", "Helvetica", "Open Sans", "Arial";*/
+/*  font-size: 13px;*/
+/*}*/
   font-family: "Times New Roman", sans-serif;
   font-size: 13px;
 }
@@ -70,6 +118,7 @@ p, figure {
   background-color: #141a24;
   box-shadow: none;
 }
+
 .sidebar .title{
   font-Size: 22px;
   color: white;
@@ -95,6 +144,53 @@ p, figure {
   font-size: 1.35rem;
   margin-right: 5px;
   min-width: 25px;
+
+/*}*/
+/*.card-list {*/
+/*  width: 100%;*/
+/*}*/
+/*.card-list:before, .card-list:after {*/
+/*  content: " ";*/
+/*  display: table;*/
+/*}*/
+/*.card-list:after {*/
+/*  clear: both;*/
+/*}*/
+/*.card {*/
+/*  border-radius: 8px;*/
+/*  color: white;*/
+/*  padding: 10px;*/
+/*  position: relative;*/
+/*}*/
+/*.card .stat {*/
+/*  border-top: 1px solid rgba(255, 255, 255, 0.3);*/
+/*  font-size: 10px;*/
+/*  margin-top: 25px;*/
+/*  padding: 10px 10px 0;*/
+/*}*/
+/*.card .title {*/
+/*  display: inline-block;*/
+/*  font-size: 14px;*/
+/*  padding: 10px 10px 0;*/
+/*}*/
+/*.card .value {*/
+/*  font-size: 28px;*/
+/*  padding: 0 10px;*/
+/*  margin-top: 20px;*/
+/*}*/
+/*.card.blue {*/
+/*  background-color: #2298F1;*/
+/*}*/
+/*.card.green {*/
+/*  background-color: #66B92E;*/
+/*}*/
+/*.card.orange {*/
+/*  background-color: #DA932C;*/
+/*}*/
+/*.card.red {*/
+/*  background-color: #D65B4A;*/
+/*}*/
+
   background-color:#141a24;
 }
 
@@ -191,6 +287,11 @@ p, figure {
 
 
 
+/*.navbar-brand*/
+/*{*/
+/*  font-size: 250px;*/
+/*}*/
+
 
 .col-lg-12
 {
@@ -286,4 +387,65 @@ select{
 a:link,
 a:visited {
   color: inherit; /* 继承父元素的文本颜色 */
+}
+.year_widget button {
+  background-color: transparent; /* 设置背景透明 */
+  border: none; /* 移除边框 */
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.year_widget button:hover {
+  background-color: rgba(0, 0, 0, 0.1); /* 鼠标悬停时可选的半透明背景 */
+}
+
+.monthly_title {
+  margin-top: 5px; /* 调整 Monthly 字的上边距 */
+}
+.react-datepicker {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 0.8rem;
+  background-color: #a66;
+  color: white;
+  border: 0px;
+  border-radius: 0;
+  display: inline-block;
+  position: relative;
+}
+
+.react-datepicker__header {
+  text-align: center;
+  background-color: #3e82cf;
+  border-bottom: 0px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  padding-top: 8px;
+  position: relative;
+
+}
+
+.react-datepicker__day-names,
+.react-datepicker__day-name {
+  color: white; /* 设置日期名称的颜色 */
+}
+
+.react-datepicker__day {
+  color: white; /* 设置日期的颜色 */
+}
+
+.react-datepicker__day--selected {
+  background-color: #007bff; /* 设置选中日期的底色 */
+  color: white; /* 设置选中日期的字体颜色为白色 */
+}
+
+.react-datepicker__day--disabled {
+  color: #ccc; /* 设置禁用日期的颜色 */
+}
+
+.react-datepicker__today {
+  font-weight: bold; /* 设置今天日期的字体加粗 */
+  color: white;
+}
+.react-datepicker__input-container input {
+  color: white; /* 设置输入框中字体颜色为白色 */
 }

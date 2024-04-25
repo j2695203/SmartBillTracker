@@ -67,8 +67,12 @@ def parse_file(file):
 @app.route('/transactions', methods = ['GET'])
 def get_transactions():
     try:
+        year = request.args.get('year')
         cursor = conn.cursor(dictionary=True)
-        cursor.execute('SELECT * FROM transactions')  # 假设你的事务表名为 transactions
+        if year:  # 如果提供了年份参数，则根据年份筛选数据
+            cursor.execute('SELECT * FROM transactions WHERE YEAR(TransactionDate) = %s', (year,))
+        else:  # 否则返回所有数据
+            cursor.execute('SELECT * FROM transactions')
         transactions = cursor.fetchall()
         return jsonify(transactions)
     except Exception as e:
@@ -123,6 +127,36 @@ def updateDatabase():
 
         return 'Data inserted successfully!'
        
-    
+
+@app.route('/transactions/range', methods=['GET'])
+def get_transactions_by_range():
+    try:
+        start_date = request.args.get('start_date')
+        end_date = request.args.get('end_date')
+        print('Start Date:', start_date)
+        print('End Date:', end_date)
+
+
+        cursor = conn.cursor()
+
+        cursor.execute('''
+            SELECT TransactionDate, Merchant, Amount
+            FROM transactions
+            WHERE TransactionDate BETWEEN %s AND %s
+        ''', (start_date, end_date))
+
+
+        transactions = cursor.fetchall()
+        print(transactions)
+        return jsonify(transactions)
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+    finally:
+        cursor.close()
+
+
+
+
 if __name__ == '__main__':
     app.run(host='localhost', port=8000, debug=True)
