@@ -61,7 +61,6 @@ def parse_file(file):
         transactions.append(transaction)
 
     json_data = json.dumps(transactions, indent=2)
-    # print(json_data)
     return json_data
 
 # Define route for getting transactions
