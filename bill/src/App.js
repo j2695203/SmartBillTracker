@@ -135,6 +135,9 @@ function About() {
             <li>Insightful Analysis: Gain valuable insights with monthly diagrams showcasing your spending habits across
               different categories.
             </li>
+            <li>
+              Historical Statements Query: Users can retrieve previously uploaded statements within selected period, eliminating the need to manually search on banking websites.
+            </li>
           </ul>
         </div>
         <p className="about-join">
