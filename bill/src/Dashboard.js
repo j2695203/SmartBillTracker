@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import Chart from 'chart.js/auto';
 
+// Component for displaying dashboard with expense breakdown
 function Dashboard() {
+    // State variables for transactions, Chart.js instances, and current year
     const [transactions, setTransactions] = useState([]);
-    const [chartInstance, setChartInstance] = useState(null); // 用于存储 Chart.js 实例
+    const [chartInstance, setChartInstance] = useState(null);
     const [monthlyChartInstance, setMonthlyChartInstance] = useState(null);
-    const [currentYear, setCurrentYear] = useState(new Date().getFullYear()); // 添加当前年份状态
+    const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
 
+    // Fetch transactions based on the current year
     useEffect(() => {
-        fetch(`http://localhost:8000/transactions?year=${currentYear}`) // 根据当前年份获取数据
+        fetch(`http://localhost:8000/transactions?year=${currentYear}`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
@@ -23,15 +26,17 @@ function Dashboard() {
             });
     }, [currentYear]);
     console.log(transactions);
+
+    // Handle previous year button click
     const handlePrevYear = () => {
-        setCurrentYear(prevYear => prevYear - 1); // 更新当前年份为上一年
+        setCurrentYear(prevYear => prevYear - 1);
     };
-
+    // Handle next year button click
     const handleNextYear = () => {
-        setCurrentYear(prevYear => prevYear + 1); // 更新当前年份为下一年
+        setCurrentYear(prevYear => prevYear + 1);
     };
 
-
+    // Update Chart.js instance when transactions change
     useEffect(() => {
         if (chartInstance) {
             chartInstance.destroy();
@@ -69,12 +74,12 @@ function Dashboard() {
                 },
                 options: {
                     layout: {
-                        padding: 0 // 设置内边距为 0
+                        padding: 0
                     },
                     plugins: {
                         legend: {
                             labels: {
-                                color: 'rgba(255, 255, 255, 0.8)', // 设置图例标签的颜色，可以调整透明度
+                                color: 'rgba(255, 255, 255, 0.8)',
                             }
                         }
                     }
@@ -84,6 +89,7 @@ function Dashboard() {
         }
     }, [transactions]);
 
+    // Update monthly Chart.js instance when transactions change
     useEffect(() => {
         if (monthlyChartInstance) {
             monthlyChartInstance.destroy();
@@ -94,15 +100,15 @@ function Dashboard() {
         }
 
         if (transactions.length > 0) {
-            const monthlyData = Array.from({ length: 12 }, () => ({})); // 初始化月份数据对象
+            const monthlyData = Array.from({ length: 12 }, () => ({}));
 
             transactions.forEach(transaction => {
-                const month = new Date(transaction.TransactionDate).getMonth(); // 获取交易月份（0-11）
+                const month = new Date(transaction.TransactionDate).getMonth();
                 const categoryName = transaction.Category;
                 if (!monthlyData[month][categoryName]) {
                     monthlyData[month][categoryName] = 0;
                 }
-                monthlyData[month][categoryName] += parseFloat(transaction.Amount); // 将金额添加到对应类别的月份
+                monthlyData[month][categoryName] += parseFloat(transaction.Amount);
             });
 
             const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -129,7 +135,7 @@ function Dashboard() {
             const newChartInstance = new Chart(ctx, {
                 type: 'bar',
                 data: {
-                    labels: monthNames, // 使用英文缩写月份
+                    labels: monthNames,
                     datasets: datasets,
 
                 },
@@ -138,23 +144,23 @@ function Dashboard() {
                         y: {
                             stacked : true,
                             ticks: {
-                                color: 'rgba(255, 255, 255, 0.8)' // 设置 y 轴上数字的颜色
+                                color: 'rgba(255, 255, 255, 0.8)'
                             }
                         },
                         x: {
-                            stacked: true, // x 轴堆叠
+                            stacked: true,
                             ticks: {
                                 color: 'rgba(255, 255, 255, 0.8)'
                             }
                         },
                         yAxes: [{
-                            stacked: true // y 轴堆叠
+                            stacked: true
                         }]
                     },
                     plugins: {
                         legend: {
                             labels: {
-                                color: 'rgba(255, 255, 255, 0.8)', // 设置图例标签的颜色
+                                color: 'rgba(255, 255, 255, 0.8)',
                             }
                         }
                     }
@@ -164,6 +170,7 @@ function Dashboard() {
         }
     }, [transactions]);
 
+    // JSX for rendering the component
     return (
         <div>
             <h1>Expense Dashboard</h1>

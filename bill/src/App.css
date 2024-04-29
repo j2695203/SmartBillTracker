@@ -121,7 +121,7 @@ select{
   margin-bottom: 20px;
 }
 .year_widget button {
-  border: none; /* 移除边框 */
+  border: none;
 }
 
 
@@ -164,7 +164,7 @@ select{
 
 a:link,
 a:visited {
-  color: inherit; /* 继承父元素的文本颜色 */
+  color: inherit;
 }
 
 
@@ -179,10 +179,8 @@ a:visited {
 .react-datepicker{
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 0.8rem;
-  /*background-color: #a66;*/
-  background-color: red;
-  /*color: white;*/
-  color: red;
+  background-color: #a66;
+  color: white;
   border: 0px;
   border-radius: 0;
   display: inline-block;
@@ -197,53 +195,44 @@ a:visited {
   border-top-right-radius: 0;
   padding-top: 8px;
   position: relative;
-  color: red;
-
 }
 
 .react-datepicker__day-names{
-  /*color: red; !* 设置日期名称的颜色 *!*/
   background: white;
 }
 .react-datepicker__day-name{
-  /*color: red; !* 设置日期名称的颜色 *!*/
   background: white;
 }
 .react-datepicker__current-month{
-  /*color: red; !* 设置日期名称的颜色 *!*/
   background: white;
 }
 
 .react-datepicker__day {
-  color: white; /* 设置日期的颜色 */
   background: white;
 }
 
 .react-datepicker__week {
-  /*color: red; !* 设置日期的颜色 *!*/
   background: white;
 }
 .react-datepicker__month-container {
-  /*color: red; !* 设置日期的颜色 *!*/
   background: white;
 }
 
 .react-datepicker__day--selected {
-  background-color: #007bff; /* 设置选中日期的底色 */
-  color: red; /* 设置选中日期的字体颜色为白色 */
+  background-color: #007bff;
 }
 
 .react-datepicker__day--disabled {
-  color: #ccc; /* 设置禁用日期的颜色 */
+  color: #ccc;
 }
 
 .react-datepicker__today {
-  font-weight: bold; /* 设置今天日期的字体加粗 */
+  font-weight: bold;
   color: white;
 }
 
 .react-datepicker__input-container input {
-  color: white; /* 设置输入框中字体颜色为白色 */
+  color: white;
 }
 
 .transactions h6{
