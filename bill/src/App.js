@@ -17,6 +17,7 @@ function Statements(){
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [transactions, setTransactions] = useState([]);
+  const [isDataFetched, setIsDataFetched] = useState(false); // New state variable
 
 
     // 在这里执行查询数据库的操作，使用 startDate 和 endDate 来构建查询时间区间
@@ -28,6 +29,7 @@ function Statements(){
       const response = await fetch(`http://localhost:8000/transactions/range?start_date=${formattedStartDate}&end_date=${formattedEndDate}`);
       const data = await response.json();
       setTransactions(data)
+      setIsDataFetched(true); // Update isDataFetched
       console.log(data)
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -38,6 +40,7 @@ function Statements(){
   return (
       <div>
         <h1>Historical Statements</h1>
+
         <div className="date-picker-container">
           <span>Time Period Selection : </span>
           <DatePicker
@@ -64,36 +67,55 @@ function Statements(){
           />
           <div className="spacer" style={{padding: '0 10px'}}/>
 
-
           <button class="btn btn-outline-primary" onClick={handleConfirm}>Confirm</button>
         </div>
 
-          <div className="transactions">
-            <h2>Transactions</h2>
-            <table className="ttable">
-              <thead>
-              <tr>
-                <th>Transaction Date</th>
-                <th>Merchant</th>
-                <th>Amount</th>
-              </tr>
-              </thead>
-              <tbody>
-              {transactions.map((transaction, index) => (
-                  <tr key={index}>
-                    <td>{transaction[0]}</td>
-                    <td>{transaction[1]}</td>
-                    <td>{transaction[2]}</td>
-                  </tr>
-              ))}
-              </tbody>
-            </table>
-          </div>
+        <div className="transactions">
+          {/* Conditional rendering based on isDataFetched and transactions.length */}
+          {isDataFetched ? (
+              <>
+                {transactions.length === 0 ? (
+                    <h6>No transactions available for the selected period</h6>
+                ) : (
+                    <>
+                      <h2>Transactions</h2>
+                      <table className="ttable">
+                        <thead>
+                        <tr>
+                          <th>Transaction Date</th>
+                          <th>Merchant</th>
+                          <th>Amount</th>
+                          <th>Category</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {/* Transaction data */}
+                        {transactions.map((transaction, index) => (
+                            <tr key={index}>
+                              <td>{new Date(transaction[0]).toLocaleDateString('en-GB', {
+                                year: '2-digit',
+                                month: '2-digit',
+                                day: '2-digit'
+                              })}</td>
+                              <td>{transaction[1]}</td>
+                              <td style={{textAlign: 'center'}}>{transaction[2]}</td>
+                              <td>{transaction[3]}</td>
+                            </tr>
+                        ))}
+                        </tbody>
+                      </table>
+                    </>
+                )}
+              </>
+          ) : (
+              <h6>No time period is selected</h6>
+          )}
+        </div>
       </div>
   )
 }
 
-function About(){
+function About() {
   return (
       <div className="about-container">
         <h1 className="about-title">Welcome to Smart Bill Tracker</h1>
@@ -149,11 +171,13 @@ function Upload() {
 
       if (response.ok) {
         console.log('Upload Success');
+        alert('Data saved successfully!');
       } else {
         throw new Error('Upload Failed');
       }
     } catch (error) {
       console.error('Upload Error', error);
+      alert('Error: Data has already been saved before!');
     }
   };
 
@@ -182,16 +206,6 @@ function Upload() {
     }));
     console.log(mergedTransactions)
     setNewTransactions(mergedTransactions)
-
-    // Show notification
-    if (toast) {
-      toast.success('Data saved successfully!', {
-        position: "top-center",
-        autoClose: 2000
-      });
-    } else {
-      console.error("Toast object is undefined");
-    }
   }
 
   // 處理當用戶選擇文件時的事件。它會更新 selectedFile 狀態，以反映用戶選擇的文件。
@@ -267,10 +281,10 @@ function Upload() {
                       <td>
                         <select name="category">
                           <option selected="" disabled>Please select a category</option>
-                          <option value="Transportation">Transportation</option>
                           <option value="Dining">Dining</option>
                           <option value="Grocery">Grocery</option>
                           <option value="Housing">Housing</option>
+                          <option value="Transportation">Transportation</option>
                           <option value="Entertainment">Entertainment</option>
                           <option value="Shopping">Shopping</option>
                           <option value="Travel">Travel</option>

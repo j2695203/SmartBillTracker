@@ -173,9 +173,10 @@ a:visited {
   display: flex;
   font-size: 20px;
   margin-bottom: 20px;
+
 }
 
-.react-datepicker {
+.react-datepicker{
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 0.8rem;
   /*background-color: #a66;*/
@@ -190,22 +191,41 @@ a:visited {
 
 .react-datepicker__header {
   text-align: center;
-  background-color: #3e82cf;
+  background: white;
   border-bottom: 0px;
   border-top-left-radius: 0;
   border-top-right-radius: 0;
   padding-top: 8px;
   position: relative;
+  color: red;
 
 }
 
-.react-datepicker__day-names,
-.react-datepicker__day-name {
-  color: white; /* 设置日期名称的颜色 */
+.react-datepicker__day-names{
+  /*color: red; !* 设置日期名称的颜色 *!*/
+  background: white;
+}
+.react-datepicker__day-name{
+  /*color: red; !* 设置日期名称的颜色 *!*/
+  background: white;
+}
+.react-datepicker__current-month{
+  /*color: red; !* 设置日期名称的颜色 *!*/
+  background: white;
 }
 
 .react-datepicker__day {
   color: white; /* 设置日期的颜色 */
+  background: white;
+}
+
+.react-datepicker__week {
+  /*color: red; !* 设置日期的颜色 *!*/
+  background: white;
+}
+.react-datepicker__month-container {
+  /*color: red; !* 设置日期的颜色 *!*/
+  background: white;
 }
 
 .react-datepicker__day--selected {
@@ -221,6 +241,12 @@ a:visited {
   font-weight: bold; /* 设置今天日期的字体加粗 */
   color: white;
 }
+
 .react-datepicker__input-container input {
   color: white; /* 设置输入框中字体颜色为白色 */
+}
+
+.transactions h6{
+  text-align: center;
+  margin-top: 60px;
 }

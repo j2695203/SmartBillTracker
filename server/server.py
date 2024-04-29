@@ -103,9 +103,7 @@ def updateDatabase():
         print(data)
 
         cursor = conn.cursor()
-        # sql = "INSERT INTO Transactions (TransactionID, TransactionDate, CardNumber, Merchant, Amount, Category) VALUES (%s, %s, %s, %s, %s, %s)"
-        # val = (data['Transaction ID'], data['Transaction Date'], data['Card Number'], data['Merchant'], data['Amount'], data['Category'])
- 
+
         for record in data:
             transaction_date = datetime.strptime(record['Transaction Date'], '%m/%d/%y').strftime('%Y-%m-%d')
             sql = "INSERT INTO Transactions (TransactionID, TransactionDate, CardNumber, Merchant, Amount, Category) VALUES (%s, %s, %s, %s, %s, %s)"
@@ -128,7 +126,7 @@ def get_transactions_by_range():
         cursor = conn.cursor()
 
         cursor.execute('''
-            SELECT TransactionDate, Merchant, Amount
+            SELECT TransactionDate, Merchant, Amount, Category
             FROM transactions
             WHERE TransactionDate BETWEEN %s AND %s
         ''', (start_date, end_date))
