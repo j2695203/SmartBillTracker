@@ -92,10 +92,10 @@ function Statements(){
                         {/* Transaction data */}
                         {transactions.map((transaction, index) => (
                             <tr key={index}>
-                              <td>{new Date(transaction[0]).toLocaleDateString('en-GB', {
-                                year: '2-digit',
+                              <td>{new Date(transaction[0]).toLocaleDateString('en-US', {
                                 month: '2-digit',
-                                day: '2-digit'
+                                day: '2-digit',
+                                year: '2-digit'
                               })}</td>
                               <td>{transaction[1]}</td>
                               <td style={{textAlign: 'center'}}>{transaction[2]}</td>
