@@ -23,7 +23,7 @@ To install Smart Bill Tracker, follow these steps:
 
 ## Usage
 
-- **Upload Statement:** Navigate to the "Upload" page and upload your credit card statement(PDF file). The process includes handling special cases and providing informative messages.
+- **Upload Statement:** Navigate to the "Upload" page and upload your credit card statement(PDF file). You can use [this statement](demo/Statement_example.pdf) as your example file. The process includes handling special cases and providing informative messages.
 - **Categorize Transactions:** Once the statement is uploaded, categorize each transaction accurately.
 - **View Expense Analysis:** Head to the "Dashboard" page to visualize your expenses through charts and graphs.
 - **Query Historical Data:** Access your historical transaction data on the "My Statement" page by specifying the desired time range.
